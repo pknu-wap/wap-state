@@ -1,8 +1,59 @@
 {
   "name": "wap-state",
+  "description": "wap-state is a global state management library for React.",
   "version": "1.0.0",
   "author": "neko113 <alstn113@gmail.com>",
   "license": "MIT",
-  "main": "index.js",
-  "scripts": {}
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pknu-wap/wap-state"
+  },
+  "homepage": "https://github.com/pknu-wap/wap-state",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "format": "prettier --write \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\"",
+    "lint": "eslint --fix \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\""
+  },
+  "lint-staged": {
+    "$(git diff --name-only --cached --relative)": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "esbuild": "^0.17.19",
+    "immer": "^10.0.2",
+    "rollup-plugin-dts": "^5.3.0",
+    "rollup-plugin-esbuild": "^5.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^3.22.0",
+    "typescript": "^5.0.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  }
 }
