@@ -1,0 +1,8 @@
+{
+  "name": "wap-state",
+  "version": "1.0.0",
+  "author": "neko113 <alstn113@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {}
+}
