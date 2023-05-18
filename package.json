@@ -1,7 +1,7 @@
 {
   "name": "wap-state",
   "description": "wap-state is a global state management library for React.",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "neko113 <alstn113@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -14,9 +14,12 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "build": "rollup -c",
-    "publish": "pnpm publish --access public",
+    "publish": "pnpm build && pnpm publish --access public",
     "format": "prettier --write \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\"",
     "lint": "eslint --fix \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\""
   },
