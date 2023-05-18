@@ -1,6 +1,6 @@
 export default {
   preset: 'ts-jest', // Use ts-jest for typescript support
-  setupoFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
