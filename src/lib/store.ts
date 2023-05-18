@@ -1,6 +1,7 @@
 import { useCallback, useSyncExternalStore } from 'react';
 
 type Listener<T> = (state: T, prevState: T) => void;
+type SetState<T> = (state: T) => T;
 
 export interface CreateStoreReturnType<T> {
   setState: (fn: (state: T) => T) => void;
@@ -13,9 +14,12 @@ export const createStore = <T>(initialState: T): CreateStoreReturnType<T> => {
   const listeners = new Set<Listener<T>>();
 
   const getState = () => state;
-  const setState = (fn: (state: T) => T) => {
+  const setState = (nextState: T | SetState<T>) => {
     const prevState = state;
-    state = fn(state);
+    state =
+      typeof nextState === 'function'
+        ? (nextState as SetState<T>)(state)
+        : nextState;
     listeners.forEach((listener) => listener(state, prevState));
   };
   const subscribe = (listener: Listener<T>) => {
