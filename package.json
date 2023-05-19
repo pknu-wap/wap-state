@@ -25,7 +25,7 @@
     "lint": "eslint --fix \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\""
   },
   "lint-staged": {
-    "$(git diff --name-only --cached --relative)": [
+    "src/**/*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix",
       "git add"
