@@ -5,10 +5,10 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": false,
-    "strict": false, // true
+    "strict": true,
     "esModuleInterop": false,
     "noUncheckedIndexedAccess": true,
-    // "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "useDefineForClassFields": true,
