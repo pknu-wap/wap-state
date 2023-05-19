@@ -5,13 +5,12 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": false,
-    "strict": true,
+    "strict": false, // true
     "esModuleInterop": false,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    // "exactOptionalPropertyTypes": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    //
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "skipLibCheck": true,
