@@ -34,14 +34,14 @@ const createStoreImpl: CreateStoreImpl = (createState) => {
   const setState: StoreApi<TState>['setState'] = (partial, replace) => {
     const nextState =
       typeof partial === 'function'
-        ? (partial as (state: TState) => TState)(state)
-        : partial;
+        ? (partial as (state: TState) => TState)(state) // ex) (state) => ({ ...state, name: 'hello' })
+        : partial; // ex) { name: 'hello' }
     if (!Object.is(nextState, state)) {
       const previousState = state;
       state =
-        replace ?? typeof nextState !== 'object'
-          ? (nextState as TState)
-          : Object.assign({}, state, nextState);
+        replace ?? typeof nextState !== 'object' // replace가 true이거나 nextState가 객체가 아닌 경우
+          ? (nextState as TState) // ex) { name: 'hello' }
+          : Object.assign({}, state, nextState); // ex) { ...state, name: 'hello' }
       listeners.forEach((listener) => listener(state, previousState));
     }
   };

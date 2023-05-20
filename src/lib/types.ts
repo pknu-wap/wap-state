@@ -1,15 +1,4 @@
-/** 
-
-interface User {
-  name: string;
-  age: number;
-}
-
-type NameType = Get<Person, 'name', null>; // string
-type AgeType = Get<Person, 'age', null>; // number
-type AddressType = Get<Person, 'address', null>; // null
-
- */
+// Person interface에서 key의 타입을 추출한다. 없으면 F 타입을 반환한다.
 export type Get<T, K, F> = K extends keyof T ? T[K] : F;
 
 /*
