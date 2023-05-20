@@ -26,8 +26,8 @@ const createImpl = <T>(createState: StateCreator<T, [], []>) => {
   // useBoundStore는 useStore와 같은 기능을 하지만 api를 전달하지 않아도 된다.
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const useBoundStore: any = (selector?: any, compare?: any) =>
-    useStore(api, selector, compare);
+  const useBoundStore: any = (selector?: any, isEqual?: any) =>
+    useStore(api, selector, isEqual);
 
   Object.assign(useBoundStore, api);
 
