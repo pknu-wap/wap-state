@@ -1,19 +1,17 @@
-import type { ExtractState, StoreApi, WithReact } from './types';
+import type { ExtractState, StoreApi } from './types';
 import { useDebugValue } from 'react';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector';
 
-export function useStore<S extends WithReact<StoreApi<unknown>>>(
-  api: S,
-): ExtractState<S>;
+export function useStore<S extends StoreApi<unknown>>(api: S): ExtractState<S>;
 
-export function useStore<S extends WithReact<StoreApi<unknown>>, U>(
+export function useStore<S extends StoreApi<unknown>, U>(
   api: S,
   selector: (state: ExtractState<S>) => U,
   equalityFn?: (a: U, b: U) => boolean,
 ): U;
 
 export function useStore<TState, StateSlice>(
-  api: WithReact<StoreApi<TState>>,
+  api: StoreApi<TState>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector: (state: TState) => StateSlice = api.getState as any,
   equalityFn?: (a: StateSlice, b: StateSlice) => boolean,

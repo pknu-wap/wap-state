@@ -35,6 +35,7 @@ export interface StoreApi<T> {
   setState: SetStateInternal<T>;
   getState: () => T;
   subscribe: (listener: (state: T, prevState: T) => void) => () => void;
+  getServerState?: () => T;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -88,14 +89,8 @@ export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
 // Omit<StoreApi<T>, 'setState'>와 비슷하다.
 export type ReadonlyStoreApi<T> = Pick<StoreApi<T>, 'getState' | 'subscribe'>;
 
-// WithReact는 React를 사용할 때 사용하는 타입입니다.
-// SSR를 위해 getServerState 함수를 추가합니다.
-export type WithReact<S extends ReadonlyStoreApi<unknown>> = S & {
-  getServerState?: () => ExtractState<S>;
-};
-
 // 스토어를 사용할 때, 상태 값을 가져오는 간단한 방법과 선택적으로 값을 선택하고 변경 여부를 판단하는 방법을 제공합니다.
-export type UseBoundStore<S extends WithReact<ReadonlyStoreApi<unknown>>> = {
+export type UseBoundStore<S extends ReadonlyStoreApi<unknown>> = {
   (): ExtractState<S>;
   <U>(
     selector: (state: ExtractState<S>) => U,
