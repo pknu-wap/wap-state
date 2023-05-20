@@ -13,8 +13,6 @@ export default [
     plugins: [
       esbuild({
         jsx: 'automatic',
-        // 주석을 제거할지 여부
-        ignoreAnnotations: false,
       }),
     ],
     input: 'src/index.ts',
