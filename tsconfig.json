@@ -16,7 +16,8 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "removeComments": true // Remove comments from output
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

@@ -38,7 +38,7 @@ export interface StoreApi<T> {
   getServerState?: () => T;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
 export interface StoreMutators<S, A> {}
 /*
 
