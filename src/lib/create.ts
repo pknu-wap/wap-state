@@ -9,9 +9,11 @@ import type {
 } from './types';
 
 type Create = {
+  // get
   <T, Mos extends [StoreMutatorIdentifier, unknown][] = []>(
     initializer: StateCreator<T, [], Mos>,
   ): UseBoundStore<Mutate<StoreApi<T>, Mos>>;
+  // get
   <T>(): <Mos extends [StoreMutatorIdentifier, unknown][] = []>(
     initializer: StateCreator<T, [], Mos>,
   ) => UseBoundStore<Mutate<StoreApi<T>, Mos>>;
