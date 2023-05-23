@@ -2,6 +2,25 @@ import type { Get } from './util-types';
 
 /**
 
+S 객체가 { getState: () => infer T } 유형에 할당 가능한지 확인합니다.
+만약 S 객체가 getState 메서드를 갖는다면, T를 반환합니다. 이는 S 객체의 getState 메서드의 반환 유형을 추론합니다.
+만약 S 객체가 getState 메서드를 갖지 않는다면, never를 반환합니다.
+
+Utity Type인 Extract Type과 유사하다.
+
+ */
+export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
+
+/** 
+
+ReadonlyStoreApi는 getState와 subscribe 함수만을 가지는 StoreApi 타입입니다.
+Omit<StoreApi<T>, 'setState'>와 비슷하다.
+
+*/
+export type ReadonlyStoreApi<T> = Pick<StoreApi<T>, 'getState' | 'subscribe'>;
+
+/**
+
 type User = {
   name: string;
   age: number;
@@ -38,24 +57,22 @@ export interface StoreApi<T> {
   subscribe: (listener: (state: T, prevState: T) => void) => () => void;
 }
 
-// Mutate를 이용하여 S를 변형할 때, Mutator의 인자를 추론하기 위해서 사용한다.
-// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
-export interface StoreMutators<S, A> {}
 /*
 
-interface User {
-  name: string;
-  age: number;
+export interface StoreMutators<State, Action> {
+  increment(state: State, action: Action): State;
+  decrement(state: State, action: Action): State;
+  reset(state: State, action: Action): State;
 }
 
-type UserMutators = StoreMutators<User, {
-  setName: (name: string) => void;
-  setAge: (age: number) => void;
-}>;
-
-type UserMutatorIdentifier = keyof UserMutators; // 'setName' | 'setAge'
+StoreMutatorIdentifier는 상태 관리 객체의 변이 식별자를 나타내는 타입입니다.
+즉, StoreMutators 인터페이스에서 정의된 변이 함수들의 키를 타입으로 가집니다.
+예를 들어, increment, decrement, reset와 같은 식별자를 가질 수 있습니다.
 
  */
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
+export interface StoreMutators<State, Action> {}
 export type StoreMutatorIdentifier = keyof StoreMutators<unknown, unknown>;
 
 // Mutate는 StoreMutators를 이용하여 S를 변형한다.
@@ -72,7 +89,7 @@ export type Mutate<S, Ms> = number extends Ms['length' & keyof Ms] // 가변 타
 
 // StateCreator은 상태(state)와 상태 변경 함수들(mutators)을 초기화하고, 해당 상태를 조작하는 함수를 생성하는 타입입니다.
 export type StateCreator<
-  T,
+  T, // <States & Actions>를 넣어줌
   Mis extends [StoreMutatorIdentifier, unknown][] = [],
   Mos extends [StoreMutatorIdentifier, unknown][] = [],
   U = T,
@@ -80,22 +97,8 @@ export type StateCreator<
   setState: Get<Mutate<StoreApi<T>, Mis>, 'setState', never>,
   getState: Get<Mutate<StoreApi<T>, Mis>, 'getState', never>,
   store: Mutate<StoreApi<T>, Mis>,
+  // $$는 내부 변수를 의미한다. 충돌 방지를 위해서 사용한다.
 ) => U) & { $$storeMutators?: Mos }; // $$storeMutators는 StoreMutators를 이용하여 S를 변형하는 함수들의 배열이다.
-
-/**
-
-S 객체가 { getState: () => infer T } 유형에 할당 가능한지 확인합니다.
-만약 S 객체가 getState 메서드를 갖는다면, T를 반환합니다. 이는 S 객체의 getState 메서드의 반환 유형을 추론합니다.
-만약 S 객체가 getState 메서드를 갖지 않는다면, never를 반환합니다.
-
-Utity Type인 Extract Type과 유사하다.
-
- */
-export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
-
-// ReadonlyStoreApi는 getState와 subscribe 함수만을 가지는 StoreApi 타입입니다.
-// Omit<StoreApi<T>, 'setState'>와 비슷하다.
-export type ReadonlyStoreApi<T> = Pick<StoreApi<T>, 'getState' | 'subscribe'>;
 
 // 스토어를 사용할 때, 상태 값을 가져오는 간단한 방법과 선택적으로 값을 선택하고 변경 여부를 판단하는 방법을 제공합니다.
 export type UseBoundStore<S extends ReadonlyStoreApi<unknown>> = {

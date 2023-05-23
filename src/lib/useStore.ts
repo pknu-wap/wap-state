@@ -2,6 +2,7 @@ import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector';
 import type { ExtractState, StoreApi } from './types';
 
+// 이 경우는 selector가 없는 경우
 export function useStore<S extends StoreApi<unknown>>(api: S): ExtractState<S>;
 
 export function useStore<S extends StoreApi<unknown>, U>(
