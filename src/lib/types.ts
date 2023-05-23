@@ -1,17 +1,30 @@
-import { Get } from './util-types';
+import type { Get } from './util-types';
 
-/*
+/**
 
-interface User {
+type User = {
   name: string;
   age: number;
-}
+};
 
-setStateInternal({ name: "Alice", age: 30 }, true); // Entire state is replaced
-setStateInternal({ age: 35 }); // Partial state is merged
-setStateInternal((state) => ({ ...state, age: state.age + 1 })); // Using update function
+const setState: SetStateInternal<User> = (partial, replace) => {
+  // Set the state of User object based on the partial input
+  // and the replace flag.
+};
 
- */
+// Example 1: Update the name property of the user
+setState({ name: 'John' });
+
+Example 2: Update both the name and age properties of the user
+setState({ name: 'Jane', age: 25 });
+
+Example 3: Update the state using a callback function
+setState((state) => ({ ...state, age: state.age + 1 }));
+
+Example 4: Replace the entire state with a new object
+setState({ name: 'Sam' }, true);
+
+*/
 export type SetStateInternal<T> = {
   _(
     partial: T | Partial<T> | { _(state: T): T | Partial<T> }['_'],
@@ -23,9 +36,9 @@ export interface StoreApi<T> {
   setState: SetStateInternal<T>;
   getState: () => T;
   subscribe: (listener: (state: T, prevState: T) => void) => () => void;
-  getServerState?: () => T;
 }
 
+// Mutate를 이용하여 S를 변형할 때, Mutator의 인자를 추론하기 위해서 사용한다.
 // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
 export interface StoreMutators<S, A> {}
 /*
@@ -69,9 +82,15 @@ export type StateCreator<
   store: Mutate<StoreApi<T>, Mis>,
 ) => U) & { $$storeMutators?: Mos }; // $$storeMutators는 StoreMutators를 이용하여 S를 변형하는 함수들의 배열이다.
 
-// ExtractState는 S에서 상태(state)를 추출하는 타입입니다.
-// getState가 반환하는 타입을 추출합니다. 없을 경우 never를 반환합니다.
-// Utility type인 Extract와 유사하다.
+/**
+
+S 객체가 { getState: () => infer T } 유형에 할당 가능한지 확인합니다.
+만약 S 객체가 getState 메서드를 갖는다면, T를 반환합니다. 이는 S 객체의 getState 메서드의 반환 유형을 추론합니다.
+만약 S 객체가 getState 메서드를 갖지 않는다면, never를 반환합니다.
+
+Utity Type인 Extract Type과 유사하다.
+
+ */
 export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
 
 // ReadonlyStoreApi는 getState와 subscribe 함수만을 가지는 StoreApi 타입입니다.

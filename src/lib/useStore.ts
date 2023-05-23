@@ -16,15 +16,11 @@ export function useStore<TState, StateSlice>(
   selector: (state: TState) => StateSlice = api.getState as any,
   isEqual?: (a: StateSlice, b: StateSlice) => boolean,
 ) {
-  const { getState, subscribe, getServerState } = api;
+  const { getState, subscribe } = api;
 
   if (!selector) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const state = useSyncExternalStore(
-      subscribe,
-      getState,
-      getServerState || getState,
-    );
+    const state = useSyncExternalStore(subscribe, getState, getState);
 
     return state;
   }
@@ -33,7 +29,7 @@ export function useStore<TState, StateSlice>(
   const state = useSyncExternalStoreWithSelector(
     subscribe,
     getState,
-    getServerState || getState,
+    getState,
     selector,
     isEqual,
   );
