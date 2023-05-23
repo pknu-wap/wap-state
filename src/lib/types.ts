@@ -1,5 +1,4 @@
-// Person interface에서 key의 타입을 추출한다. 없으면 F 타입을 반환한다.
-export type Get<T, K, F> = K extends keyof T ? T[K] : F;
+import { Get } from './util-types';
 
 /*
 
@@ -72,6 +71,7 @@ export type StateCreator<
 
 // ExtractState는 S에서 상태(state)를 추출하는 타입입니다.
 // getState가 반환하는 타입을 추출합니다. 없을 경우 never를 반환합니다.
+// Utility type인 Extract와 유사하다.
 export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
 
 // ReadonlyStoreApi는 getState와 subscribe 함수만을 가지는 StoreApi 타입입니다.

@@ -10,7 +10,7 @@ describe('[WAP-STATE] counterStore test', () => {
     decrement: (num: number) => void;
   };
 
-  const counterStore = create<States & Actions>((set, get) => ({
+  const counterStore = create<States & Actions>((set) => ({
     count: 0,
     increment: (num) => set((state) => ({ count: state.count + num })),
     decrement: (num) => set((state) => ({ count: state.count - num })),
@@ -54,7 +54,7 @@ describe('[WAP-STATE] todoStore test', () => {
     deleteTodo: (id: number) => void;
   };
 
-  const todoStore = create<States & Actions>((set, get) => ({
+  const todoStore = create<States & Actions>((set) => ({
     todo: [
       {
         id: 1,

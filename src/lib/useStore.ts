@@ -18,6 +18,18 @@ export function useStore<TState, StateSlice>(
 ) {
   const { getState, subscribe, getServerState } = api;
 
+  if (!selector) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const state = useSyncExternalStore(
+      subscribe,
+      getState,
+      getServerState || getState,
+    );
+
+    return state;
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const state = useSyncExternalStoreWithSelector(
     subscribe,
     getState,

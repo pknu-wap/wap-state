@@ -16,10 +16,12 @@ type CreateStoreImpl = <
 // 함수 호출 시그니처 or 함수 호출 시그니처를 반환하는 함수를 반환한다.
 // 예를 들어 createStore()()와 같이 사용할 수 있다. 또는 createStore()와 같이 사용할 수 있다.
 type CreateStore = {
+  // set
   <T, Mos extends [StoreMutatorIdentifier, unknown][] = []>(
     initializer: StateCreator<T, [], Mos>,
   ): Mutate<StoreApi<T>, Mos>;
 
+  // get
   <T>(): <Mos extends [StoreMutatorIdentifier, unknown][] = []>(
     initializer: StateCreator<T, [], Mos>,
   ) => Mutate<StoreApi<T>, Mos>;
