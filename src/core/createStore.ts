@@ -2,8 +2,6 @@
 import type { StoreApi, StateCreator } from '../types';
 import { produce } from 'immer';
 
-type CreateStoreImpl = <T>(initializer: StateCreator<T>) => StoreApi<T>;
-
 type CreateStore = {
   // set
   <T>(initializer: StateCreator<T>): StoreApi<T>;
@@ -12,7 +10,7 @@ type CreateStore = {
   <T>(): (initializer: StateCreator<T>) => StoreApi<T>;
 };
 
-export const createStoreImpl: CreateStoreImpl = (createState) => {
+export const createStore = ((createState) => {
   type TState = ReturnType<typeof createState>;
   type Listener = () => void;
 
@@ -34,9 +32,13 @@ export const createStoreImpl: CreateStoreImpl = (createState) => {
     } else {
       state = Object.assign({}, state, nextState); // ex) { ...state, name: 'hello' }
     }
+
+    // state가 변경되었을 때, 등록된 listener를 모두 실행한다.
     listeners.forEach((listener) => listener());
   };
 
+  // subscribe의 역할은 listener를 등록하고, 등록된 listener를 삭제하는 함수를 반환한다.
+  // listener등록은 state가 변경되었을 때, listener를 실행하기 위함이다.
   const subscribe: StoreApi<TState>['subscribe'] = (listener) => {
     listeners.add(listener);
     return () => listeners.delete(listener);
@@ -44,8 +46,6 @@ export const createStoreImpl: CreateStoreImpl = (createState) => {
 
   const api = { setState, getState, subscribe };
   state = createState(setState, getState);
-  return api as any;
-};
 
-export const createStore = ((createState) =>
-  createState ? createStoreImpl(createState) : createStoreImpl) as CreateStore;
+  return api;
+}) as CreateStore;
