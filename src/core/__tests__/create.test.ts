@@ -1,6 +1,6 @@
-import { create } from '../../dist';
+import { create } from '../../../dist';
 
-describe('[WAP-STATE] counterStore test', () => {
+describe('create', () => {
   type States = {
     count: number;
   };
@@ -36,7 +36,7 @@ describe('[WAP-STATE] counterStore test', () => {
   });
 });
 
-describe('[WAP-STATE] todoStore test', () => {
+describe('[wap-state] todoStore test', () => {
   interface Todo {
     id: number;
     text: string;
