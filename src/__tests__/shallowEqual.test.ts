@@ -8,8 +8,8 @@ describe('shallow', () => {
     expect(shallowEqual(1, 1)).toBe(true);
     expect(shallowEqual(1, 2)).toBe(false);
 
-    expect(shallowEqual('zustand', 'zustand')).toBe(true);
-    expect(shallowEqual('zustand', 'redux')).toBe(false);
+    expect(shallowEqual('wap-state', 'wap-state')).toBe(true);
+    expect(shallowEqual('wap-state', 'redux')).toBe(false);
   });
 
   it('compares objects', () => {
