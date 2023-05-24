@@ -2,6 +2,17 @@
 
 wap-state은 Zustand의 영향을 받아 개발된 간편하고 강력한 상태 관리 라이브러리입니다.
 
+<p align="center">
+  <a href="https://github.com/pknu-wap/wap-state/blob/main/LICENSE">
+    <img src="https://badgen.net/github/license/pknu-wap/wap-state">
+  </a>
+  <a href="https://www.npmjs.com/package/wap-state">
+    <img src="https://img.shields.io/npm/dm/wap-state.svg?style=flat-round" alt="npm downloads">
+  </a>
+  <img alt="Github Stars" src="https://badgen.net/github/stars/pknu-wap/wap-state" />
+  <img src="https://badgen.net/github/release/pknu-wap/wap-state">
+</p>
+
 ## Feature
 
 - **Immer**: 내부에 immer를 적용해서 불변성을 유지하면서 상태를 업데이트하는 작업을 간편하게 처리할 수 있음.
