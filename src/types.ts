@@ -5,6 +5,7 @@ export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
 
 export type SetStateInternal<T> = {
   updateFn(
+    // ex) setState({ count: 1 }), setState((state) => state.count = 1)
     partial: T | Partial<T> | ((state: Draft<T>) => void),
     replace?: boolean | undefined,
   ): void;
