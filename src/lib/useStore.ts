@@ -1,13 +1,14 @@
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector';
 import type { ExtractState, StoreApi } from './types';
+import { shallowEqual } from './shallowEqual';
 
 // 이 경우는 selector가 없는 경우
-export function useStore<S extends StoreApi<unknown>>(api: S): ExtractState<S>;
+export function useStore<TState>(api: TState): ExtractState<TState>;
 
-export function useStore<S extends StoreApi<unknown>, U>(
-  api: S,
-  selector: (state: ExtractState<S>) => U,
+export function useStore<TState, U>(
+  api: TState,
+  selector: (state: ExtractState<TState>) => U,
   isEqual?: (a: U, b: U) => boolean,
 ): U;
 
@@ -32,7 +33,7 @@ export function useStore<TState, StateSlice>(
     getState,
     getState,
     selector,
-    isEqual,
+    isEqual ?? shallowEqual,
   );
 
   return state;
