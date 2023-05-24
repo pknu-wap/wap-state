@@ -1,4 +1,4 @@
-import { Get } from './util-types';
+import type { Get } from './util-types';
 import type { Draft } from 'immer';
 
 export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;

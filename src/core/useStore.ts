@@ -1,9 +1,8 @@
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector';
-import type { ExtractState, StoreApi } from './types';
-import { shallowEqual } from './shallowEqual';
+import type { ExtractState, StoreApi } from '../types';
+import { shallowEqual } from '../lib/shallowEqual';
 
-// 이 경우는 selector가 없는 경우
 export function useStore<TState>(api: TState): ExtractState<TState>;
 
 export function useStore<TState, U>(
@@ -20,21 +19,16 @@ export function useStore<TState, StateSlice>(
 ) {
   const { getState, subscribe } = api;
 
-  if (!selector) {
+  if (!selector)
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const state = useSyncExternalStore(subscribe, getState, getState);
-
-    return state;
-  }
+    return useSyncExternalStore(subscribe, getState, getState);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const state = useSyncExternalStoreWithSelector(
+  return useSyncExternalStoreWithSelector(
     subscribe,
     getState,
     getState,
     selector,
     isEqual ?? shallowEqual,
   );
-
-  return state;
 }

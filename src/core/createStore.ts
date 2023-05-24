@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StoreApi, StateCreator } from './types';
+import type { StoreApi, StateCreator } from '../types';
 import { produce } from 'immer';
 
 type CreateStoreImpl = <T>(initializer: StateCreator<T>) => StoreApi<T>;

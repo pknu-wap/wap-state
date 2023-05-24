@@ -1,6 +1,6 @@
 import { createStore } from './createStore';
 import { useStore } from './useStore';
-import { StateCreator, StoreApi, UseBoundStore } from './types';
+import type { StateCreator, StoreApi, UseBoundStore } from '../types';
 
 type Create = {
   // set
