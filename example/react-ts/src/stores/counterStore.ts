@@ -1,4 +1,4 @@
-import { create } from 'wap-state';
+import { wstate } from 'wap-state';
 
 type States = {
   count: number;
@@ -9,7 +9,7 @@ type Actions = {
   decrement: (num: number) => void;
 };
 
-const counterStore = create<States & Actions>((set) => ({
+const counterStore = wstate<States & Actions>((set) => ({
   count: 0,
   increment: (num: number) => set((state) => ({ count: state.count + num })),
   decrement: (num: number) => set((state) => ({ count: state.count - num })),

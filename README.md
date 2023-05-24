@@ -10,6 +10,9 @@ wap-state은 Zustand의 영향을 받아 개발된 간편하고 강력한 상태
     <img src="https://img.shields.io/npm/dm/wap-state.svg?style=flat-round" alt="npm downloads">
   </a>
   <img alt="Github Stars" src="https://badgen.net/github/stars/pknu-wap/wap-state" />
+
+</p>
+<p align="center">
   <img src="https://badgen.net/github/release/pknu-wap/wap-state"/>
   <img src="https://badgen.net/packagephobia/publish/wap-state"/>
 </p>

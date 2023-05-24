@@ -8,8 +8,8 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   wap-state:
-    specifier: ^0.1.32
-    version: 0.1.32(react@18.2.0)
+    specifier: ^0.1.35
+    version: 0.1.35(react@18.2.0)
 
 devDependencies:
   '@types/react':
@@ -1459,8 +1459,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /wap-state@0.1.32(react@18.2.0):
-    resolution: {integrity: sha512-ScENqpz2BsBA1e447sjthpm9ewg7Q9QMaHqjooP+Xyv93nnfwiwodN6LfzmQ2KU6sREVg71Qtq8t9mMMVbwogg==}
+  /wap-state@0.1.35(react@18.2.0):
+    resolution: {integrity: sha512-KoN4Q64MNz5a9i2VnA+PzvGHJEcuVGIvNXbzdazoA1FiBl4DcjijV09kAv4EW/BiSxMRCuq5Y40U7fmAgXZcQw==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
