@@ -1,7 +1,7 @@
 {
   "name": "wap-state",
   "description": "wap-state is a global state management library for React.",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "author": "neko113 <alstn113@gmail.com>",
   "license": "MIT",
   "private": false,
