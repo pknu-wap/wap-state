@@ -19,22 +19,134 @@ wap-state은 Zustand의 영향을 받아 개발된 간편하고 강력한 상태
 
 ## Feature
 
-- **Immer**: 내부에 immer를 적용해서 불변성을 유지하면서 상태를 업데이트하는 작업을 간편하게 처리할 수 있음.
-- **ShallowEqual**: 필요한 상태만 선택적으로 공유할 수 있고, 리렌더링을 방지하여 효율적인 상태 관리를 할 수 있습니다.
+- **Immer**: 내부에 immer를 적용해서 불변성을 유지하면서 상태를 업데이트하는 작업을 간편하게 처리할 수 있습니다.
+- **Shallow Equal**: 필요한 상태만 선택적으로 공유할 수 있고, 리렌더링을 방지하여 효율적인 상태 관리를 할 수 있습니다.
 - **lightweight**: 불필요한 코드를 모두 제거하여 경량화된 라이브러리입니다.
+- **Support Typescript**: 타입스크립트를 지원합니다.
 
 ## Installation
 
-다음 명령어로 이 라이브러리를 설치하세요.
+Install this library with the following command.
 
 ```sh
 $ pnpm add wap-state
-
 # or
-
 $ yarn add wap-state
-
 # or
-
 $ npm intall wap-state
+```
+
+## Usage
+
+### First create a state
+
+You can create global state management hook through `wstate`.
+Create states and actions types for the correct type, and create states and actions inside the wstate.
+
+```ts
+// src/stores/useCounterStore.ts
+
+import { wstate } from 'wap-state';
+
+type States = {
+  count: number;
+  step: number;
+};
+
+type Actions = {
+  increment: (num: number) => void;
+  decrement: (num: number) => void;
+  resetCount: () => void;
+};
+
+const useCounterStore = wstate<States & Actions>((set) => ({
+  count: 0,
+  step: 0,
+  increment: (num: number) => set((state) => ({ count: state.count + num })),
+  decrement: (num: number) => set((state) => ({ count: state.count - num })),
+  resetCount: () => set({ count: 0 }),
+}));
+
+export default useCounterStore;
+```
+
+We support `immer` library internally to update state for nested state.
+
+```tsx
+// src/stores/useNestedStore.ts
+
+type States = {
+  a: {
+    b: {
+      c: {
+        d: {
+          e: string;
+        };
+      };
+    };
+  };
+};
+
+type Actions = {
+  setE: (e: string) => void;
+};
+
+const useNestedStore = wstate<States & Actions>((set, get) => ({
+  a: {
+    b: {
+      c: {
+        d: {
+          e: 'b',
+        },
+      },
+    },
+  },
+  setE: (e: string) => set((state) => (state.a.b.c.d.e = e)),
+}));
+
+export default useNestedStore;
+```
+
+### Use the state or actions from your components
+
+```tsx
+import useCounterStore from './stores/useCounterStore';
+
+const CounterComponent = () => {
+  const { count, increment, decrement, resetCount } = useCounterStore();
+
+  return (
+    <div>
+      <div>{count}</div>
+      <button onClick={() => increment(1)}>+</button>
+      <button onClick={() => decrement(1)}>-</button>
+      <button onClick={() => resetCount()}>reset</button>
+      <div>{counteA}</div>
+    </div>
+  );
+};
+
+export default CounterComponent;
+```
+
+### Select part of state
+
+If you want to selet part of the state, you can pass selector function as argument.
+If you select multiple fields, the component will rerender after shallow comparison.
+
+```tsx
+const { count, step } = useCounterStore((state) => ({
+  count: state.count,
+  step: state.step,
+}));
+```
+
+Or you can use custom equality function.
+
+```tsx
+const count = useCounterStore(
+  (state) => ({ count: state.count, step: state.step }),
+  // this part
+  (prev, new) => customCompare(prev, new),
+);
 ```
