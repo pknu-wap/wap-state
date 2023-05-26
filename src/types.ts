@@ -1,12 +1,11 @@
 import type { Get } from './util-types';
-import type { Draft } from 'immer';
 
 export type ExtractState<S> = S extends { getState: () => infer T } ? T : never;
 
 export type SetStateInternal<T> = {
   updateFn(
     // ex) setState({ count: 1 }), setState((state) => state.count = 1)
-    partial: T | Partial<T> | ((state: Draft<T>) => void),
+    partial: T | Partial<T> | { _(state: T): T | Partial<T> }['_'],
     replace?: boolean | undefined,
   ): void;
 }['updateFn'];

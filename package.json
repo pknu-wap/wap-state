@@ -31,7 +31,6 @@
     ]
   },
   "dependencies": {
-    "immer": "^10.0.2",
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { StoreApi, StateCreator } from '../types';
-import { produce } from 'immer';
 
 type CreateStore = {
   // set
@@ -21,7 +20,9 @@ export const createStore = ((createState) => {
 
   const setState: StoreApi<TState>['setState'] = (partial, replace) => {
     const nextState = (
-      typeof partial === 'function' ? produce(partial as any) : partial
+      typeof partial === 'function'
+        ? (partial as (state: TState) => TState)(state)
+        : partial
     ) as ((s: TState) => TState) | TState | Partial<TState>;
 
     if (Object.is(nextState, state)) return;
