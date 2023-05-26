@@ -21,7 +21,7 @@ export const createStore = ((createState) => {
 
   const setState: StoreApi<TState>['setState'] = (partial, replace) => {
     const nextState = (
-      typeof partial === 'function' ? produce(partial as any)(state) : partial
+      typeof partial === 'function' ? produce(partial as any) : partial
     ) as ((s: TState) => TState) | TState | Partial<TState>;
 
     if (Object.is(nextState, state)) return;

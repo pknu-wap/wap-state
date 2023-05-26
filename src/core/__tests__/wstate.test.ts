@@ -1,7 +1,7 @@
 import { wstate } from '../wstate';
 
 describe('wstate', () => {
-  it('test', () => {
+  test('basic', () => {
     type States = {
       count: number;
     };
@@ -29,5 +29,30 @@ describe('wstate', () => {
     expect(useCounterStore.getState().count).toBe(3);
     useCounterStore.getState().incByNum(2);
     expect(useCounterStore.getState().count).toBe(5);
+  });
+
+  test('nested staet', () => {
+    type States = {
+      a: { b: { c: { d: number } } };
+    };
+
+    type Actions = {
+      setD: (d: number) => void;
+    };
+
+    const useNestedStore = wstate<States & Actions>((set) => ({
+      a: {
+        b: {
+          c: {
+            d: 0,
+          },
+        },
+      },
+      setD: (newD) => set((state) => (state.a.b.c.d = newD)),
+    }));
+
+    expect(useNestedStore.getState().a.b.c.d).toBe(0);
+    useNestedStore.getState().setD(1);
+    expect(useNestedStore.getState().a.b.c.d).toBe(1);
   });
 });
