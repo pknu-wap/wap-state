@@ -1,4 +1,5 @@
 import { wstate } from '../wstate';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 describe('wstate', () => {
   test('basic', () => {
@@ -29,5 +30,37 @@ describe('wstate', () => {
     expect(useCounterStore.getState().count).toBe(3);
     useCounterStore.getState().incByNum(2);
     expect(useCounterStore.getState().count).toBe(5);
+
+    // reset, replace test
+    useCounterStore.setState({}, true);
+    expect(useCounterStore.getState().count).toBe(undefined);
+  });
+
+  test('selector', () => {
+    type States = {
+      trash: number;
+      mirror: number;
+      desk: number;
+    };
+
+    type Actions = {
+      inc: () => void;
+      incByNum: (num: number) => void;
+    };
+
+    const useWapStore = wstate<States & Actions>((set) => ({
+      trash: 4,
+      mirror: 5,
+      desk: 6,
+      inc: () => set((state) => ({ trash: state.trash + 1 })),
+      incByNum: (num) => set((state) => ({ trash: state.trash + num })),
+    }));
+    const { result } = renderHook(() => useWapStore((state) => state.trash));
+    expect(result.current).toBe(4);
+
+    const { result: result2 } = renderHook(() =>
+      useWapStore((state) => state.trash + state.mirror),
+    );
+    expect(result2.current).toBe(9);
   });
 });
