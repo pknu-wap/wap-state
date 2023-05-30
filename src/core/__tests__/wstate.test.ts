@@ -1,5 +1,5 @@
 import { wstate } from '../wstate';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 
 describe('wstate', () => {
   test('basic', () => {
