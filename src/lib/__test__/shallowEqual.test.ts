@@ -2,10 +2,10 @@ import { shallowEqual } from '../shallowEqual';
 
 describe('shallowEqual', () => {
   test('원시 타입 비교', () => {
-    expect(shallowEqual(5, 5)).toBe(true);
     expect(shallowEqual('hello', 'hello')).toBe(true);
-    expect(shallowEqual(true, false)).toBe(false);
+    expect(shallowEqual(5, 5)).toBe(true);
     expect(shallowEqual(null, undefined)).toBe(false);
+    expect(shallowEqual(true, false)).toBe(false);
   });
 
   test('객체 비교', () => {
