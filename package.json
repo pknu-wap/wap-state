@@ -21,8 +21,9 @@
     "test": "jest",
     "build": "rollup -c",
     "publish:wap-state": "pnpm build && yarn publish --access public",
-    "format": "prettier --write \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\"",
-    "lint": "eslint --fix \"*/**/*.{js,json,md} \" \"src/**/*.{ts,tsx,js,json,md,mdx}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
